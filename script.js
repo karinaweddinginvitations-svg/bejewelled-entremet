@@ -20,24 +20,3 @@ const observer = new IntersectionObserver((entries) => entries.forEach(({ isInte
 }), { threshold: 0.12 });
 
 document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
-
-const calculator = document.querySelector('.calculator');
-const calculatorOpen = document.querySelector('.calculator-open');
-const calculatorClose = document.querySelector('.dialog-close');
-const tariff = document.querySelector('#tariff');
-const total = document.querySelector('#total');
-
-calculatorOpen.addEventListener('click', () => calculator.showModal());
-calculatorClose.addEventListener('click', () => calculator.close());
-calculator.addEventListener('click', (event) => {
-  if (event.target === calculator) calculator.close();
-});
-
-const updateTotal = () => {
-  const extras = [...calculator.querySelectorAll('input:checked')]
-    .reduce((sum, input) => sum + Number(input.value), 0);
-  total.textContent = `${(Number(tariff.value) + extras).toLocaleString('ru-RU')} ₽`;
-};
-
-tariff.addEventListener('change', updateTotal);
-calculator.querySelectorAll('input').forEach((input) => input.addEventListener('change', updateTotal));
